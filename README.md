@@ -68,7 +68,7 @@ ml-research-kg/
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/ml-research-kg.git
+git clone https://github.com/willpon4/ml-research-kg.git
 cd ml-research-kg
 
 # Create virtual environment
