@@ -1,0 +1,201 @@
+@prefix mlkg: <http://ml-research-kg.org/ontology#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Ontology Declaration
+mlkg: a owl:Ontology ;
+    rdfs:label "Machine Learning Research Knowledge Graph Ontology" ;
+    rdfs:comment "An ontology for representing machine learning and AI research papers, authors, institutions, and their relationships." ;
+    owl:versionInfo "1.0" .
+
+###############################################################################
+# CLASSES
+###############################################################################
+
+# Top-level Classes
+
+mlkg:Agent a owl:Class ;
+    rdfs:label "Agent" ;
+    rdfs:comment "An entity that can act or be responsible for actions (persons or organizations)" .
+
+mlkg:Work a owl:Class ;
+    rdfs:label "Work" ;
+    rdfs:comment "A creative or intellectual work" .
+
+mlkg:Event a owl:Class ;
+    rdfs:label "Event" ;
+    rdfs:comment "An occurrence or happening" .
+
+mlkg:Concept a owl:Class ;
+    rdfs:label "Concept" ;
+    rdfs:comment "An abstract idea or notion" .
+
+# Core Classes
+
+mlkg:Author a owl:Class ;
+    rdfs:subClassOf mlkg:Agent ;
+    rdfs:label "Author" ;
+    rdfs:comment "A person who writes research papers" .
+
+mlkg:Institution a owl:Class ;
+    rdfs:subClassOf mlkg:Agent ;
+    rdfs:label "Institution" ;
+    rdfs:comment "An organization such as a university, company, or research lab" .
+
+mlkg:Publication a owl:Class ;
+    rdfs:subClassOf mlkg:Work ;
+    rdfs:label "Publication" ;
+    rdfs:comment "A research paper, article, or pre-print" .
+
+mlkg:Venue a owl:Class ;
+    rdfs:subClassOf mlkg:Event ;
+    rdfs:label "Venue" ;
+    rdfs:comment "A conference or journal where papers are published" .
+
+mlkg:ResearchArea a owl:Class ;
+    rdfs:subClassOf mlkg:Concept ;
+    rdfs:label "Research Area" ;
+    rdfs:comment "A broad field of study (e.g., Natural Language Processing, Computer Vision)" .
+
+mlkg:ResearchTopic a owl:Class ;
+    rdfs:subClassOf mlkg:Concept ;
+    rdfs:label "Research Topic" ;
+    rdfs:comment "A specific research area, keyword, or concept (e.g., transformers, GANs)" .
+
+mlkg:Dataset a owl:Class ;
+    rdfs:label "Dataset" ;
+    rdfs:comment "A collection of data used for training or evaluation in research" .
+
+mlkg:CodeRepository a owl:Class ;
+    rdfs:label "Code Repository" ;
+    rdfs:comment "A source code repository (e.g., on GitHub) implementing research" .
+
+###############################################################################
+# OBJECT PROPERTIES (relationships between entities)
+###############################################################################
+
+# Authorship & Affiliation
+
+mlkg:authorOf a owl:ObjectProperty ;
+    rdfs:label "author of" ;
+    rdfs:comment "Relates an author to a publication they wrote" ;
+    rdfs:domain mlkg:Author ;
+    rdfs:range mlkg:Publication .
+
+mlkg:affiliatedWith a owl:ObjectProperty ;
+    rdfs:label "affiliated with" ;
+    rdfs:comment "Relates an author to their institution" ;
+    rdfs:domain mlkg:Author ;
+    rdfs:range mlkg:Institution .
+
+mlkg:firstAuthor a owl:ObjectProperty ;
+    rdfs:label "first author" ;
+    rdfs:comment "Relates a publication to its first (primary) author" ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range mlkg:Author .
+
+# Citations
+
+mlkg:cites a owl:ObjectProperty ;
+    rdfs:label "cites" ;
+    rdfs:comment "Relates a publication to another publication it references" ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range mlkg:Publication .
+
+# Publication Details
+
+mlkg:publishedIn a owl:ObjectProperty ;
+    rdfs:label "published in" ;
+    rdfs:comment "Relates a publication to the venue where it was published" ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range mlkg:Venue .
+
+# Research Content
+
+mlkg:hasKeyword a owl:ObjectProperty ;
+    rdfs:label "has keyword" ;
+    rdfs:comment "Relates a publication to a research topic it addresses" ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range mlkg:ResearchTopic .
+
+mlkg:inArea a owl:ObjectProperty ;
+    rdfs:label "in area" ;
+    rdfs:comment "Relates a publication to its broad research area" ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range mlkg:ResearchArea .
+
+mlkg:topicInArea a owl:ObjectProperty ;
+    rdfs:label "topic in area" ;
+    rdfs:comment "Relates a specific research topic to its broader research area" ;
+    rdfs:domain mlkg:ResearchTopic ;
+    rdfs:range mlkg:ResearchArea .
+
+# Datasets & Code
+
+mlkg:usesDataset a owl:ObjectProperty ;
+    rdfs:label "uses dataset" ;
+    rdfs:comment "Relates a publication to a dataset it uses" ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range mlkg:Dataset .
+
+mlkg:hasCode a owl:ObjectProperty ;
+    rdfs:label "has code" ;
+    rdfs:comment "Relates a publication to its code implementation" ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range mlkg:CodeRepository .
+
+mlkg:implementationOf a owl:ObjectProperty ;
+    rdfs:label "implementation of" ;
+    rdfs:comment "Relates a code repository to the publication it implements" ;
+    rdfs:domain mlkg:CodeRepository ;
+    rdfs:range mlkg:Publication ;
+    owl:inverseOf mlkg:hasCode .
+
+# Collaboration
+
+mlkg:coauthorWith a owl:ObjectProperty ;
+    rdfs:label "coauthor with" ;
+    rdfs:comment "Relates an author to another author they have collaborated with" ;
+    rdfs:domain mlkg:Author ;
+    rdfs:range mlkg:Author ;
+    a owl:SymmetricProperty .
+
+###############################################################################
+# DATATYPE PROPERTIES (attributes with literal values)
+###############################################################################
+
+mlkg:citationCount a owl:DatatypeProperty ;
+    rdfs:label "citation count" ;
+    rdfs:comment "The number of times a publication has been cited" ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range xsd:integer .
+
+mlkg:publicationYear a owl:DatatypeProperty ;
+    rdfs:label "publication year" ;
+    rdfs:comment "The year a publication was published" ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range xsd:integer .
+
+mlkg:title a owl:DatatypeProperty ;
+    rdfs:label "title" ;
+    rdfs:comment "The title of a publication" ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range xsd:string .
+
+mlkg:abstract a owl:DatatypeProperty ;
+    rdfs:label "abstract" ;
+    rdfs:comment "The abstract or summary of a publication" ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range xsd:string .
+
+mlkg:name a owl:DatatypeProperty ;
+    rdfs:label "name" ;
+    rdfs:comment "The name of an entity (author, institution, venue, etc.)" ;
+    rdfs:range xsd:string .
+
+mlkg:url a owl:DatatypeProperty ;
+    rdfs:label "URL" ;
+    rdfs:comment "A web address for accessing more information" ;
+    rdfs:range xsd:anyURI .
