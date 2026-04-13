@@ -1,0 +1,1406 @@
+@prefix mlkg: <http://example.org/mlkg/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+mlkg: a owl:Ontology ;
+    rdfs:label "Machine Learning Research Knowledge Graph Ontology" ;
+    rdfs:comment "Ontology for representing ML research papers, authors, institutions, and their relationships." .
+
+mlkg:abstract a owl:DatatypeProperty ;
+    rdfs:label "abstract" ;
+    rdfs:comment "The abstract text of a publication." ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range xsd:string .
+
+mlkg:affiliatedWith a owl:ObjectProperty ;
+    rdfs:label "affiliated with" ;
+    rdfs:comment "Connects an author to their institution." ;
+    rdfs:domain mlkg:Author ;
+    rdfs:range mlkg:Institution .
+
+mlkg:authorOf a owl:ObjectProperty ;
+    rdfs:label "author of" ;
+    rdfs:comment "Connects an author to a paper they wrote." ;
+    rdfs:domain mlkg:Author ;
+    rdfs:range mlkg:Publication .
+
+mlkg:citationCount a owl:DatatypeProperty ;
+    rdfs:label "citation count" ;
+    rdfs:comment "The number of times a paper has been cited." ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range xsd:integer .
+
+mlkg:cites a owl:ObjectProperty ;
+    rdfs:label "cites" ;
+    rdfs:comment "Indicates that one paper cites another." ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range mlkg:Publication .
+
+mlkg:coauthorWith a owl:ObjectProperty,
+        owl:SymmetricProperty ;
+    rdfs:label "coauthor with" ;
+    rdfs:comment "Connects two authors who have co-authored a paper." ;
+    rdfs:domain mlkg:Author ;
+    rdfs:range mlkg:Author .
+
+mlkg:firstAuthor a owl:ObjectProperty ;
+    rdfs:label "first author" ;
+    rdfs:comment "Identifies the first/lead author of a publication." ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range mlkg:Author .
+
+mlkg:hasCode a owl:ObjectProperty ;
+    rdfs:label "has code" ;
+    rdfs:comment "Connects a paper to its code implementation." ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range mlkg:CodeRepository .
+
+mlkg:hasKeyword a owl:ObjectProperty ;
+    rdfs:label "has keyword" ;
+    rdfs:comment "Connects a paper to a specific research topic." ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range mlkg:ResearchTopic .
+
+mlkg:implementationOf a owl:ObjectProperty ;
+    rdfs:label "implementation of" ;
+    rdfs:comment "Connects a code repo to the paper it implements." ;
+    rdfs:domain mlkg:CodeRepository ;
+    rdfs:range mlkg:Publication .
+
+mlkg:inArea a owl:ObjectProperty ;
+    rdfs:label "in area" ;
+    rdfs:comment "Connects a paper to a broad research area." ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range mlkg:ResearchArea .
+
+mlkg:publicationYear a owl:DatatypeProperty ;
+    rdfs:label "publication year" ;
+    rdfs:comment "The year a paper was published." ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range xsd:integer .
+
+mlkg:publishedIn a owl:ObjectProperty ;
+    rdfs:label "published in" ;
+    rdfs:comment "Connects a paper to the venue where it was published." ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range mlkg:Venue .
+
+mlkg:title a owl:DatatypeProperty ;
+    rdfs:label "title" ;
+    rdfs:comment "The title of a publication." ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range xsd:string .
+
+mlkg:topicInArea a owl:ObjectProperty ;
+    rdfs:label "topic in area" ;
+    rdfs:comment "Connects a specific topic to its broader research area." ;
+    rdfs:domain mlkg:ResearchTopic ;
+    rdfs:range mlkg:ResearchArea .
+
+mlkg:usesDataset a owl:ObjectProperty ;
+    rdfs:label "uses dataset" ;
+    rdfs:comment "Connects a paper to a dataset it uses." ;
+    rdfs:domain mlkg:Publication ;
+    rdfs:range mlkg:Dataset .
+
+mlkg:Dataset a owl:Class ;
+    rdfs:label "Dataset" ;
+    rdfs:comment "A dataset used for training or evaluation." .
+
+<http://example.org/mlkg/data/area/mathematics> a mlkg:ResearchArea ;
+    rdfs:label "Mathematics" .
+
+<http://example.org/mlkg/data/author/a001> a mlkg:Author ;
+    rdfs:label "Ashish Vaswani" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google_brain> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p001> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a002>,
+        <http://example.org/mlkg/data/author/a003>,
+        <http://example.org/mlkg/data/author/a004> .
+
+<http://example.org/mlkg/data/author/a005> a mlkg:Author ;
+    rdfs:label "Jacob Devlin" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google_ai> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p002> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a006>,
+        <http://example.org/mlkg/data/author/a007> .
+
+<http://example.org/mlkg/data/author/a006> a mlkg:Author ;
+    rdfs:label "Ming-Wei Chang" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google_ai> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p002> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a007> .
+
+<http://example.org/mlkg/data/author/a008> a mlkg:Author ;
+    rdfs:label "Tom Brown" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/openai> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p003> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a002>,
+        <http://example.org/mlkg/data/author/a009>,
+        <http://example.org/mlkg/data/author/a010> .
+
+<http://example.org/mlkg/data/author/a009> a mlkg:Author ;
+    rdfs:label "Benjamin Mann" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/openai> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p003> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a002>,
+        <http://example.org/mlkg/data/author/a010> .
+
+<http://example.org/mlkg/data/author/a011> a mlkg:Author ;
+    rdfs:label "Ian Goodfellow" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/apple>,
+        <http://example.org/mlkg/data/institution/google_brain> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p004> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a012>,
+        <http://example.org/mlkg/data/author/a013>,
+        <http://example.org/mlkg/data/author/a014> .
+
+<http://example.org/mlkg/data/author/a012> a mlkg:Author ;
+    rdfs:label "Jean Pouget-Abadie" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/universite_de_montreal> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p004> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a013>,
+        <http://example.org/mlkg/data/author/a014> .
+
+<http://example.org/mlkg/data/author/a015> a mlkg:Author ;
+    rdfs:label "Tero Karras" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/nvidia> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p005> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a016>,
+        <http://example.org/mlkg/data/author/a017> .
+
+<http://example.org/mlkg/data/author/a016> a mlkg:Author ;
+    rdfs:label "Samuli Laine" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/nvidia> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p005> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a017> .
+
+<http://example.org/mlkg/data/author/a018> a mlkg:Author ;
+    rdfs:label "Thomas Kipf" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google_brain>,
+        <http://example.org/mlkg/data/institution/university_of_amsterdam> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p006> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a019> .
+
+<http://example.org/mlkg/data/author/a019> a mlkg:Author ;
+    rdfs:label "Max Welling" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/microsoft_research>,
+        <http://example.org/mlkg/data/institution/university_of_amsterdam> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p006> .
+
+<http://example.org/mlkg/data/author/a020> a mlkg:Author ;
+    rdfs:label "Petar Velickovic" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/deepmind>,
+        <http://example.org/mlkg/data/institution/university_of_cambridge> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p007> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a014>,
+        <http://example.org/mlkg/data/author/a021> .
+
+<http://example.org/mlkg/data/author/a021> a mlkg:Author ;
+    rdfs:label "Guillem Cucurull" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/facebook_ai> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p007> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a014> .
+
+<http://example.org/mlkg/data/author/a022> a mlkg:Author ;
+    rdfs:label "William Hamilton" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/mcgill_university> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p008> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a023>,
+        <http://example.org/mlkg/data/author/a024> .
+
+<http://example.org/mlkg/data/author/a023> a mlkg:Author ;
+    rdfs:label "Zhitao Ying" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/stanford_university> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p008> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a024> .
+
+<http://example.org/mlkg/data/author/a025> a mlkg:Author ;
+    rdfs:label "Alexey Dosovitskiy" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google_brain> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p009> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a004> .
+
+<http://example.org/mlkg/data/author/a026> a mlkg:Author ;
+    rdfs:label "Long Ouyang" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/openai> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p010> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a027> .
+
+<http://example.org/mlkg/data/author/a027> a mlkg:Author ;
+    rdfs:label "Jeff Wu" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/openai> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p010> .
+
+<http://example.org/mlkg/data/author/a029> a mlkg:Author ;
+    rdfs:label "Xiangyu Zhang" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/megvii_technology> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p011> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a030>,
+        <http://example.org/mlkg/data/author/a031> .
+
+<http://example.org/mlkg/data/author/a032> a mlkg:Author ;
+    rdfs:label "Olga Russakovsky" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/princeton_university> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p012> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a033>,
+        <http://example.org/mlkg/data/author/a034> .
+
+<http://example.org/mlkg/data/author/a033> a mlkg:Author ;
+    rdfs:label "Jia Deng" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/princeton_university> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p012> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a034> .
+
+<http://example.org/mlkg/data/author/a035> a mlkg:Author ;
+    rdfs:label "Jonathan Ho" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google_brain> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p013> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a036>,
+        <http://example.org/mlkg/data/author/a037> .
+
+<http://example.org/mlkg/data/author/a036> a mlkg:Author ;
+    rdfs:label "Ajay Jain" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/uc_berkeley> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p013> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a037> .
+
+<http://example.org/mlkg/data/author/a038> a mlkg:Author ;
+    rdfs:label "Robin Rombach" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/ludwig_maximilian_university> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p014> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a039>,
+        <http://example.org/mlkg/data/author/a040> .
+
+<http://example.org/mlkg/data/author/a039> a mlkg:Author ;
+    rdfs:label "Andreas Blattmann" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/ludwig_maximilian_university> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p014> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a040> .
+
+<http://example.org/mlkg/data/author/a041> a mlkg:Author ;
+    rdfs:label "Chitwan Saharia" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google_brain> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p015> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a002> .
+
+<http://example.org/mlkg/data/author/a042> a mlkg:Author ;
+    rdfs:label "Antoine Bordes" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/meta_ai> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p016> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a043>,
+        <http://example.org/mlkg/data/author/a044> .
+
+<http://example.org/mlkg/data/author/a043> a mlkg:Author ;
+    rdfs:label "Nicolas Usunier" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/meta_ai> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p016> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a044> .
+
+<http://example.org/mlkg/data/author/a045> a mlkg:Author ;
+    rdfs:label "Zhiqing Sun" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/carnegie_mellon_university> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p017> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a024>,
+        <http://example.org/mlkg/data/author/a046> .
+
+<http://example.org/mlkg/data/author/a046> a mlkg:Author ;
+    rdfs:label "Zhi-Hong Deng" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/peking_university> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p017> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a024> .
+
+<http://example.org/mlkg/data/author/a047> a mlkg:Author ;
+    rdfs:label "Theo Trouillon" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/cnrs> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p018> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a048> .
+
+<http://example.org/mlkg/data/author/a048> a mlkg:Author ;
+    rdfs:label "Johannes Welbl" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/ucl> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p018> .
+
+<http://example.org/mlkg/data/author/a049> a mlkg:Author ;
+    rdfs:label "Volodymyr Mnih" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/deepmind> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p019> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a050>,
+        <http://example.org/mlkg/data/author/a051> .
+
+<http://example.org/mlkg/data/author/a050> a mlkg:Author ;
+    rdfs:label "Koray Kavukcuoglu" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/deepmind> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p019> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a051> .
+
+<http://example.org/mlkg/data/author/a052> a mlkg:Author ;
+    rdfs:label "Aaron van den Oord" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/deepmind> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p020> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a053> .
+
+<http://example.org/mlkg/data/author/a053> a mlkg:Author ;
+    rdfs:label "Nal Kalchbrenner" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/deepmind> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p020> .
+
+<http://example.org/mlkg/data/author/a054> a mlkg:Author ;
+    rdfs:label "John Schulman" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/openai> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p021> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a037>,
+        <http://example.org/mlkg/data/author/a055> .
+
+<http://example.org/mlkg/data/author/a055> a mlkg:Author ;
+    rdfs:label "Filip Wolski" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/openai> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p021> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a037> .
+
+<http://example.org/mlkg/data/author/a056> a mlkg:Author ;
+    rdfs:label "Ting Chen" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google_brain> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p022> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a057>,
+        <http://example.org/mlkg/data/author/a058> .
+
+<http://example.org/mlkg/data/author/a057> a mlkg:Author ;
+    rdfs:label "Simon Kornblith" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google_brain> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p022> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a058> .
+
+<http://example.org/mlkg/data/author/a059> a mlkg:Author ;
+    rdfs:label "Haoqi Fan" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/meta_ai> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p023> .
+
+<http://example.org/mlkg/data/author/a061> a mlkg:Author ;
+    rdfs:label "Eider Moore" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p024> .
+
+<http://example.org/mlkg/data/author/a062> a mlkg:Author ;
+    rdfs:label "Peter Kairouz" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p025> .
+
+<http://example.org/mlkg/data/author/a063> a mlkg:Author ;
+    rdfs:label "Barret Zoph" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google_brain> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p026> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a064> .
+
+<http://example.org/mlkg/data/author/a064> a mlkg:Author ;
+    rdfs:label "Quoc Le" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google_brain> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p026> .
+
+<http://example.org/mlkg/data/author/a065> a mlkg:Author ;
+    rdfs:label "Hanxiao Liu" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google_brain> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p027> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a066> .
+
+<http://example.org/mlkg/data/author/a066> a mlkg:Author ;
+    rdfs:label "Karen Simonyan" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/deepmind> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p027> .
+
+<http://example.org/mlkg/data/author/a067> a mlkg:Author ;
+    rdfs:label "Joseph Redmon" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/university_of_washington> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p028> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a068>,
+        <http://example.org/mlkg/data/author/a069> .
+
+<http://example.org/mlkg/data/author/a068> a mlkg:Author ;
+    rdfs:label "Santosh Divvala" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/allen_institute_for_ai> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p028> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a069> .
+
+<http://example.org/mlkg/data/author/a071> a mlkg:Author ;
+    rdfs:label "Jason Yosinski" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/uber_ai_labs> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p030> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a014>,
+        <http://example.org/mlkg/data/author/a072> .
+
+<http://example.org/mlkg/data/author/a072> a mlkg:Author ;
+    rdfs:label "Jeff Clune" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/openai>,
+        <http://example.org/mlkg/data/institution/university_of_wyoming> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p030> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a014> .
+
+<http://example.org/mlkg/data/author/a073> a mlkg:Author ;
+    rdfs:label "Jared Kaplan" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/anthropic>,
+        <http://example.org/mlkg/data/institution/johns_hopkins_university> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p031> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a074> .
+
+<http://example.org/mlkg/data/author/a074> a mlkg:Author ;
+    rdfs:label "Sam McCandlish" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/anthropic> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p031> .
+
+<http://example.org/mlkg/data/author/a075> a mlkg:Author ;
+    rdfs:label "Nitish Srivastava" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/university_of_toronto> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p032> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a058> .
+
+<http://example.org/mlkg/data/author/a076> a mlkg:Author ;
+    rdfs:label "Diederik Kingma" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google_brain> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p033> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a077> .
+
+<http://example.org/mlkg/data/author/a077> a mlkg:Author ;
+    rdfs:label "Jimmy Ba" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/university_of_toronto> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p033> .
+
+<http://example.org/mlkg/data/author/a078> a mlkg:Author ;
+    rdfs:label "Sergey Ioffe" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p034> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a079> .
+
+<http://example.org/mlkg/data/author/a079> a mlkg:Author ;
+    rdfs:label "Christian Szegedy" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google_brain> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p034> .
+
+<http://example.org/mlkg/data/author/a080> a mlkg:Author ;
+    rdfs:label "Yuntao Bai" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/anthropic> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p035> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a081> .
+
+<http://example.org/mlkg/data/author/a081> a mlkg:Author ;
+    rdfs:label "Saurav Kadavath" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/anthropic> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p035> .
+
+<http://example.org/mlkg/data/institution/apple> a mlkg:Institution ;
+    rdfs:label "Apple" .
+
+<http://example.org/mlkg/data/institution/carnegie_mellon_university> a mlkg:Institution ;
+    rdfs:label "Carnegie Mellon University" .
+
+<http://example.org/mlkg/data/institution/cnrs> a mlkg:Institution ;
+    rdfs:label "CNRS" .
+
+<http://example.org/mlkg/data/institution/covariant> a mlkg:Institution ;
+    rdfs:label "Covariant" .
+
+<http://example.org/mlkg/data/institution/facebook_ai> a mlkg:Institution ;
+    rdfs:label "Facebook AI" .
+
+<http://example.org/mlkg/data/institution/johns_hopkins_university> a mlkg:Institution ;
+    rdfs:label "Johns Hopkins University" .
+
+<http://example.org/mlkg/data/institution/mcgill_university> a mlkg:Institution ;
+    rdfs:label "McGill University" .
+
+<http://example.org/mlkg/data/institution/mila> a mlkg:Institution ;
+    rdfs:label "Mila" .
+
+<http://example.org/mlkg/data/institution/mit> a mlkg:Institution ;
+    rdfs:label "MIT" .
+
+<http://example.org/mlkg/data/institution/peking_university> a mlkg:Institution ;
+    rdfs:label "Peking University" .
+
+<http://example.org/mlkg/data/institution/uber_ai_labs> a mlkg:Institution ;
+    rdfs:label "Uber AI Labs" .
+
+<http://example.org/mlkg/data/institution/ucsd> a mlkg:Institution ;
+    rdfs:label "UCSD" .
+
+<http://example.org/mlkg/data/institution/university_of_cambridge> a mlkg:Institution ;
+    rdfs:label "University of Cambridge" .
+
+<http://example.org/mlkg/data/institution/university_of_wyoming> a mlkg:Institution ;
+    rdfs:label "University of Wyoming" .
+
+<http://example.org/mlkg/data/topic/bert> a mlkg:ResearchTopic ;
+    rdfs:label "BERT and Variants" ;
+    mlkg:topicInArea <http://example.org/mlkg/data/area/natural_language_processing> .
+
+<http://example.org/mlkg/data/topic/gpt> a mlkg:ResearchTopic ;
+    rdfs:label "GPT and Large Language Models" ;
+    mlkg:topicInArea <http://example.org/mlkg/data/area/natural_language_processing> .
+
+<http://example.org/mlkg/data/venue/aistats> a mlkg:Venue ;
+    rdfs:label "AISTATS" .
+
+<http://example.org/mlkg/data/venue/foundations_and_trends_in_ml> a mlkg:Venue ;
+    rdfs:label "Foundations and Trends in ML" .
+
+<http://example.org/mlkg/data/venue/ijcv> a mlkg:Venue ;
+    rdfs:label "IJCV" .
+
+<http://example.org/mlkg/data/venue/jmlr> a mlkg:Venue ;
+    rdfs:label "JMLR" .
+
+<http://example.org/mlkg/data/venue/naacl> a mlkg:Venue ;
+    rdfs:label "NAACL" .
+
+<http://example.org/mlkg/data/venue/nips_workshop> a mlkg:Venue ;
+    rdfs:label "NIPS Workshop" .
+
+mlkg:CodeRepository a owl:Class ;
+    rdfs:label "Code Repository" ;
+    rdfs:comment "A GitHub or other code implementation of a paper." .
+
+<http://example.org/mlkg/data/author/a003> a mlkg:Author ;
+    rdfs:label "Niki Parmar" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google_brain> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p001> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a004> .
+
+<http://example.org/mlkg/data/author/a007> a mlkg:Author ;
+    rdfs:label "Kenton Lee" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google_ai> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p002> .
+
+<http://example.org/mlkg/data/author/a010> a mlkg:Author ;
+    rdfs:label "Nick Ryder" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/openai> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p003> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a002> .
+
+<http://example.org/mlkg/data/author/a013> a mlkg:Author ;
+    rdfs:label "Mehdi Mirza" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/universite_de_montreal> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p004> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a014> .
+
+<http://example.org/mlkg/data/author/a017> a mlkg:Author ;
+    rdfs:label "Timo Aila" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/nvidia> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p005> .
+
+<http://example.org/mlkg/data/author/a034> a mlkg:Author ;
+    rdfs:label "Hao Su" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/ucsd> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p012> .
+
+<http://example.org/mlkg/data/author/a040> a mlkg:Author ;
+    rdfs:label "Dominik Lorenz" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/ludwig_maximilian_university> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p014> .
+
+<http://example.org/mlkg/data/author/a044> a mlkg:Author ;
+    rdfs:label "Jason Weston" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/meta_ai> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p016> .
+
+<http://example.org/mlkg/data/author/a051> a mlkg:Author ;
+    rdfs:label "David Silver" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/deepmind>,
+        <http://example.org/mlkg/data/institution/ucl> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p019> .
+
+<http://example.org/mlkg/data/author/a060> a mlkg:Author ;
+    rdfs:label "H. Brendan McMahan" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p024>,
+        <http://example.org/mlkg/data/publication/p025> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a061>,
+        <http://example.org/mlkg/data/author/a062> .
+
+<http://example.org/mlkg/data/author/a069> a mlkg:Author ;
+    rdfs:label "Ali Farhadi" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/allen_institute_for_ai>,
+        <http://example.org/mlkg/data/institution/university_of_washington> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p028> .
+
+<http://example.org/mlkg/data/author/a070> a mlkg:Author ;
+    rdfs:label "Ross Girshick" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/meta_ai> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p029> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a031> .
+
+<http://example.org/mlkg/data/institution/allen_institute_for_ai> a mlkg:Institution ;
+    rdfs:label "Allen Institute for AI" .
+
+<http://example.org/mlkg/data/institution/megvii_technology> a mlkg:Institution ;
+    rdfs:label "MEGVII Technology" .
+
+<http://example.org/mlkg/data/institution/microsoft_research> a mlkg:Institution ;
+    rdfs:label "Microsoft Research" .
+
+<http://example.org/mlkg/data/institution/princeton_university> a mlkg:Institution ;
+    rdfs:label "Princeton University" .
+
+<http://example.org/mlkg/data/institution/stanford_university> a mlkg:Institution ;
+    rdfs:label "Stanford University" .
+
+<http://example.org/mlkg/data/institution/uc_berkeley> a mlkg:Institution ;
+    rdfs:label "UC Berkeley" .
+
+<http://example.org/mlkg/data/institution/ucl> a mlkg:Institution ;
+    rdfs:label "UCL" .
+
+<http://example.org/mlkg/data/institution/university_of_amsterdam> a mlkg:Institution ;
+    rdfs:label "University of Amsterdam" .
+
+<http://example.org/mlkg/data/institution/university_of_washington> a mlkg:Institution ;
+    rdfs:label "University of Washington" .
+
+<http://example.org/mlkg/data/publication/p015> a mlkg:Publication ;
+    rdfs:label "Photorealistic Text-to-Image Diffusion Models with Deep Language Understanding" ;
+    mlkg:abstract "We present Imagen, a text-to-image diffusion model with an unprecedented degree of photorealism and a deep level of language understanding. Imagen builds on the power of large transformer language models."^^xsd:string ;
+    mlkg:citationCount 5000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p001>,
+        <http://example.org/mlkg/data/publication/p003>,
+        <http://example.org/mlkg/data/publication/p013>,
+        <http://example.org/mlkg/data/publication/p014> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a041> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/diffusion>,
+        <http://example.org/mlkg/data/topic/transformer> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/deep_learning>,
+        <http://example.org/mlkg/data/area/generative_models>,
+        <http://example.org/mlkg/data/area/natural_language_processing> ;
+    mlkg:publicationYear 2022 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/neurips> ;
+    mlkg:title "Photorealistic Text-to-Image Diffusion Models with Deep Language Understanding"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p018> a mlkg:Publication ;
+    rdfs:label "Complex Embeddings for Simple Link Prediction" ;
+    mlkg:abstract "In statistical relational learning, knowledge graph completion deals with automatically understanding the structure of large knowledge graphs. We present ComplEx, an extension of DistMult that uses complex-valued embeddings for link prediction."^^xsd:string ;
+    mlkg:citationCount 3000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p016>,
+        <http://example.org/mlkg/data/publication/p017> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a047> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/knowledge_graph> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/graph_ml>,
+        <http://example.org/mlkg/data/area/representation_learning> ;
+    mlkg:publicationYear 2016 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/icml> ;
+    mlkg:title "Complex Embeddings for Simple Link Prediction"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p023> a mlkg:Publication ;
+    rdfs:label "Momentum Contrast for Unsupervised Visual Representation Learning" ;
+    mlkg:abstract "We present Momentum Contrast (MoCo) for unsupervised visual representation learning. We view contrastive learning as dictionary look-up, and build a dynamic dictionary with a queue and a moving-averaged encoder."^^xsd:string ;
+    mlkg:citationCount 12000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p011>,
+        <http://example.org/mlkg/data/publication/p022> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a028> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/self_supervised> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/representation_learning> ;
+    mlkg:publicationYear 2020 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/cvpr> ;
+    mlkg:title "Momentum Contrast for Unsupervised Visual Representation Learning"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p025> a mlkg:Publication ;
+    rdfs:label "Advances and Open Problems in Federated Learning" ;
+    mlkg:abstract "Federated learning is a machine learning setting where multiple entities collaborate in solving a machine learning problem under the coordination of a central server. This paper discusses recent advances and enumerates important open problems."^^xsd:string ;
+    mlkg:citationCount 6000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p024> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a060> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/federated_learning> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/optimization> ;
+    mlkg:publicationYear 2021 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/foundations_and_trends_in_ml> ;
+    mlkg:title "Advances and Open Problems in Federated Learning"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p027> a mlkg:Publication ;
+    rdfs:label "DARTS: Differentiable Architecture Search" ;
+    mlkg:abstract "We address the scalability challenge of neural architecture search by formulating the task in a differentiable manner. We propose DARTS, an efficient architecture search algorithm that uses continuous relaxation of the discrete search space."^^xsd:string ;
+    mlkg:citationCount 5500 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p008>,
+        <http://example.org/mlkg/data/publication/p026> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a065> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/neural_arch_search> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/optimization> ;
+    mlkg:publicationYear 2019 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/iclr> ;
+    mlkg:title "DARTS: Differentiable Architecture Search"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p035> a mlkg:Publication ;
+    rdfs:label "Constitutional AI: Harmlessness from AI Feedback" ;
+    mlkg:abstract "We experiment with methods for training a harmless AI assistant through a process we call Constitutional AI. The approach involves both a supervised learning and a reinforcement learning phase using AI-generated feedback."^^xsd:string ;
+    mlkg:citationCount 2000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p003>,
+        <http://example.org/mlkg/data/publication/p010>,
+        <http://example.org/mlkg/data/publication/p031> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a080> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/reinforcement_learning> ;
+    mlkg:publicationYear 2022 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/arxiv> ;
+    mlkg:title "Constitutional AI: Harmlessness from AI Feedback"^^xsd:string .
+
+<http://example.org/mlkg/data/topic/attention> a mlkg:ResearchTopic ;
+    rdfs:label "Attention Mechanisms" ;
+    mlkg:topicInArea <http://example.org/mlkg/data/area/deep_learning> .
+
+<http://example.org/mlkg/data/topic/federated_learning> a mlkg:ResearchTopic ;
+    rdfs:label "Federated Learning" ;
+    mlkg:topicInArea <http://example.org/mlkg/data/area/optimization> .
+
+<http://example.org/mlkg/data/topic/gan> a mlkg:ResearchTopic ;
+    rdfs:label "Generative Adversarial Networks" ;
+    mlkg:topicInArea <http://example.org/mlkg/data/area/generative_models> .
+
+<http://example.org/mlkg/data/topic/knowledge_graph> a mlkg:ResearchTopic ;
+    rdfs:label "Knowledge Graphs" ;
+    mlkg:topicInArea <http://example.org/mlkg/data/area/graph_ml> .
+
+<http://example.org/mlkg/data/topic/neural_arch_search> a mlkg:ResearchTopic ;
+    rdfs:label "Neural Architecture Search" ;
+    mlkg:topicInArea <http://example.org/mlkg/data/area/optimization> .
+
+<http://example.org/mlkg/data/topic/rl_deep> a mlkg:ResearchTopic ;
+    rdfs:label "Deep Reinforcement Learning" ;
+    mlkg:topicInArea <http://example.org/mlkg/data/area/reinforcement_learning> .
+
+<http://example.org/mlkg/data/topic/self_supervised> a mlkg:ResearchTopic ;
+    rdfs:label "Self-Supervised Learning" ;
+    mlkg:topicInArea <http://example.org/mlkg/data/area/representation_learning> .
+
+<http://example.org/mlkg/data/author/a028> a mlkg:Author ;
+    rdfs:label "Kaiming He" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/meta_ai>,
+        <http://example.org/mlkg/data/institution/mit> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p011>,
+        <http://example.org/mlkg/data/publication/p023>,
+        <http://example.org/mlkg/data/publication/p029> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a029>,
+        <http://example.org/mlkg/data/author/a030>,
+        <http://example.org/mlkg/data/author/a031>,
+        <http://example.org/mlkg/data/author/a059>,
+        <http://example.org/mlkg/data/author/a070> .
+
+<http://example.org/mlkg/data/author/a030> a mlkg:Author ;
+    rdfs:label "Shaoqing Ren" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/microsoft_research> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p011>,
+        <http://example.org/mlkg/data/publication/p029> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a028>,
+        <http://example.org/mlkg/data/author/a031>,
+        <http://example.org/mlkg/data/author/a070> .
+
+<http://example.org/mlkg/data/author/a058> a mlkg:Author ;
+    rdfs:label "Geoffrey Hinton" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google_brain>,
+        <http://example.org/mlkg/data/institution/university_of_toronto> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p022>,
+        <http://example.org/mlkg/data/publication/p032> .
+
+<http://example.org/mlkg/data/institution/google_ai> a mlkg:Institution ;
+    rdfs:label "Google AI" .
+
+<http://example.org/mlkg/data/institution/ludwig_maximilian_university> a mlkg:Institution ;
+    rdfs:label "Ludwig Maximilian University" .
+
+<http://example.org/mlkg/data/institution/nvidia> a mlkg:Institution ;
+    rdfs:label "NVIDIA" .
+
+<http://example.org/mlkg/data/institution/universite_de_montreal> a mlkg:Institution ;
+    rdfs:label "Universite de Montreal" .
+
+<http://example.org/mlkg/data/institution/university_of_toronto> a mlkg:Institution ;
+    rdfs:label "University of Toronto" .
+
+<http://example.org/mlkg/data/publication/p009> a mlkg:Publication ;
+    rdfs:label "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale" ;
+    mlkg:abstract "While the Transformer architecture has become the de-facto standard for natural language processing tasks, its applications to computer vision remain limited. We show that a pure transformer applied directly to sequences of image patches can perform very well on image classification tasks."^^xsd:string ;
+    mlkg:citationCount 30000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p001>,
+        <http://example.org/mlkg/data/publication/p011> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a025> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/transformer> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/deep_learning>,
+        <http://example.org/mlkg/data/area/natural_language_processing> ;
+    mlkg:publicationYear 2021 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/iclr> ;
+    mlkg:title "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p010> a mlkg:Publication ;
+    rdfs:label "Training language models to follow instructions with human feedback" ;
+    mlkg:abstract "Making language models bigger does not inherently make them better at following a user's intent. We show that fine-tuning with human feedback significantly improves language model behavior through reinforcement learning from human feedback (RLHF)."^^xsd:string ;
+    mlkg:citationCount 8500 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p001>,
+        <http://example.org/mlkg/data/publication/p002>,
+        <http://example.org/mlkg/data/publication/p003>,
+        <http://example.org/mlkg/data/publication/p021> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a026> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/gpt>,
+        <http://example.org/mlkg/data/topic/transfer_learning> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/natural_language_processing>,
+        <http://example.org/mlkg/data/area/reinforcement_learning>,
+        <http://example.org/mlkg/data/area/representation_learning> ;
+    mlkg:publicationYear 2022 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/neurips> ;
+    mlkg:title "Training language models to follow instructions with human feedback"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p020> a mlkg:Publication ;
+    rdfs:label "Conditional Image Generation with PixelCNN Decoders" ;
+    mlkg:abstract "This work explores conditional image generation with a new image density model based on the PixelCNN architecture. We show that a single model can generate diverse, globally coherent images."^^xsd:string ;
+    mlkg:citationCount 4500 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p004>,
+        <http://example.org/mlkg/data/publication/p005> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a052> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/cnn> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/generative_models> ;
+    mlkg:publicationYear 2016 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/neurips> ;
+    mlkg:title "Conditional Image Generation with PixelCNN Decoders"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p024> a mlkg:Publication ;
+    rdfs:label "Communication-Efficient Learning of Deep Networks from Decentralized Data" ;
+    mlkg:abstract "Modern mobile devices have access to a wealth of data suitable for learning models, which in turn can greatly improve the user experience on the device. We propose federated learning, a method for training deep networks on decentralized data."^^xsd:string ;
+    mlkg:citationCount 18000 ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a060> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/federated_learning> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/optimization> ;
+    mlkg:publicationYear 2017 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/aistats> ;
+    mlkg:title "Communication-Efficient Learning of Deep Networks from Decentralized Data"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p026> a mlkg:Publication ;
+    rdfs:label "Neural Architecture Search with Reinforcement Learning" ;
+    mlkg:abstract "Neural network design requires a lot of expert knowledge. We use a recurrent neural network to generate the model descriptions of neural networks and train this RNN with reinforcement learning to maximize the expected accuracy of generated architectures."^^xsd:string ;
+    mlkg:citationCount 8000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p019> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a063> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/neural_arch_search> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/deep_learning>,
+        <http://example.org/mlkg/data/area/optimization>,
+        <http://example.org/mlkg/data/area/reinforcement_learning> ;
+    mlkg:publicationYear 2017 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/iclr> ;
+    mlkg:title "Neural Architecture Search with Reinforcement Learning"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p031> a mlkg:Publication ;
+    rdfs:label "Scaling Laws for Neural Language Models" ;
+    mlkg:abstract "We study empirical scaling laws for language model performance on the cross-entropy loss. The loss scales as a power-law with model size, dataset size, and the amount of compute used for training."^^xsd:string ;
+    mlkg:citationCount 4000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p001>,
+        <http://example.org/mlkg/data/publication/p003> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a073> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/natural_language_processing> ;
+    mlkg:publicationYear 2020 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/arxiv> ;
+    mlkg:title "Scaling Laws for Neural Language Models"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p034> a mlkg:Publication ;
+    rdfs:label "Batch Normalization: Accelerating Deep Network Training" ;
+    mlkg:abstract "Training Deep Neural Networks is complicated by the fact that the distribution of each layer's inputs changes during training. We propose Batch Normalization, which allows us to use much higher learning rates and be less careful about initialization."^^xsd:string ;
+    mlkg:citationCount 48000 ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a078> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/deep_learning>,
+        <http://example.org/mlkg/data/area/optimization> ;
+    mlkg:publicationYear 2015 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/icml> ;
+    mlkg:title "Batch Normalization: Accelerating Deep Network Training"^^xsd:string .
+
+<http://example.org/mlkg/data/topic/diffusion> a mlkg:ResearchTopic ;
+    rdfs:label "Diffusion Models" ;
+    mlkg:topicInArea <http://example.org/mlkg/data/area/generative_models> .
+
+<http://example.org/mlkg/data/topic/gnn> a mlkg:ResearchTopic ;
+    rdfs:label "Graph Neural Networks" ;
+    mlkg:topicInArea <http://example.org/mlkg/data/area/graph_ml> .
+
+<http://example.org/mlkg/data/topic/object_detection> a mlkg:ResearchTopic ;
+    rdfs:label "Object Detection" ;
+    mlkg:topicInArea <http://example.org/mlkg/data/area/computer_vision> .
+
+<http://example.org/mlkg/data/topic/transfer_learning> a mlkg:ResearchTopic ;
+    rdfs:label "Transfer Learning" ;
+    mlkg:topicInArea <http://example.org/mlkg/data/area/representation_learning> .
+
+<http://example.org/mlkg/data/venue/arxiv> a mlkg:Venue ;
+    rdfs:label "arXiv" .
+
+<http://example.org/mlkg/data/venue/icml> a mlkg:Venue ;
+    rdfs:label "ICML" .
+
+<http://example.org/mlkg/data/author/a004> a mlkg:Author ;
+    rdfs:label "Jakob Uszkoreit" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google_brain> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p001>,
+        <http://example.org/mlkg/data/publication/p009> .
+
+<http://example.org/mlkg/data/author/a024> a mlkg:Author ;
+    rdfs:label "Jure Leskovec" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/stanford_university> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p008>,
+        <http://example.org/mlkg/data/publication/p017> .
+
+<http://example.org/mlkg/data/author/a031> a mlkg:Author ;
+    rdfs:label "Jian Sun" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/megvii_technology> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p011>,
+        <http://example.org/mlkg/data/publication/p029> .
+
+<http://example.org/mlkg/data/author/a037> a mlkg:Author ;
+    rdfs:label "Pieter Abbeel" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/covariant>,
+        <http://example.org/mlkg/data/institution/uc_berkeley> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p013>,
+        <http://example.org/mlkg/data/publication/p021> .
+
+<http://example.org/mlkg/data/institution/anthropic> a mlkg:Institution ;
+    rdfs:label "Anthropic" .
+
+<http://example.org/mlkg/data/institution/google> a mlkg:Institution ;
+    rdfs:label "Google" .
+
+<http://example.org/mlkg/data/publication/p005> a mlkg:Publication ;
+    rdfs:label "A Style-Based Generator Architecture for Generative Adversarial Networks" ;
+    mlkg:abstract "We propose an alternative generator architecture for generative adversarial networks, borrowing from style transfer literature. The new architecture leads to an automatically learned, unsupervised separation of high-level attributes."^^xsd:string ;
+    mlkg:citationCount 12000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p001>,
+        <http://example.org/mlkg/data/publication/p004>,
+        <http://example.org/mlkg/data/publication/p011> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a015> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/gan> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/generative_models> ;
+    mlkg:publicationYear 2019 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/cvpr> ;
+    mlkg:title "A Style-Based Generator Architecture for Generative Adversarial Networks"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p006> a mlkg:Publication ;
+    rdfs:label "Semi-Supervised Classification with Graph Convolutional Networks" ;
+    mlkg:abstract "We present a scalable approach for semi-supervised learning on graph-structured data that is based on an efficient variant of convolutional neural networks which operate directly on graphs."^^xsd:string ;
+    mlkg:citationCount 25000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p001>,
+        <http://example.org/mlkg/data/publication/p032>,
+        <http://example.org/mlkg/data/publication/p033> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a018> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/cnn>,
+        <http://example.org/mlkg/data/topic/gnn> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/deep_learning>,
+        <http://example.org/mlkg/data/area/graph_ml> ;
+    mlkg:publicationYear 2017 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/iclr> ;
+    mlkg:title "Semi-Supervised Classification with Graph Convolutional Networks"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p007> a mlkg:Publication ;
+    rdfs:label "Graph Attention Networks" ;
+    mlkg:abstract "We present graph attention networks (GATs), novel neural network architectures that operate on graph-structured data, leveraging masked self-attentional layers to address the shortcomings of prior methods based on graph convolutions."^^xsd:string ;
+    mlkg:citationCount 18000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p001>,
+        <http://example.org/mlkg/data/publication/p002>,
+        <http://example.org/mlkg/data/publication/p006> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a020> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/attention>,
+        <http://example.org/mlkg/data/topic/cnn>,
+        <http://example.org/mlkg/data/topic/gnn>,
+        <http://example.org/mlkg/data/topic/transformer> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/deep_learning>,
+        <http://example.org/mlkg/data/area/graph_ml> ;
+    mlkg:publicationYear 2018 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/iclr> ;
+    mlkg:title "Graph Attention Networks"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p008> a mlkg:Publication ;
+    rdfs:label "Inductive Representation Learning on Large Graphs" ;
+    mlkg:abstract "Low-dimensional embeddings of nodes in large graphs have proved extremely useful in a variety of prediction tasks. We propose GraphSAGE, a general inductive framework that leverages node feature information to efficiently generate node embeddings."^^xsd:string ;
+    mlkg:citationCount 15000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p006>,
+        <http://example.org/mlkg/data/publication/p007> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a022> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/gnn> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/graph_ml>,
+        <http://example.org/mlkg/data/area/representation_learning> ;
+    mlkg:publicationYear 2017 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/neurips> ;
+    mlkg:title "Inductive Representation Learning on Large Graphs"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p014> a mlkg:Publication ;
+    rdfs:label "High-Resolution Image Synthesis with Latent Diffusion Models" ;
+    mlkg:abstract "By decomposing the image formation process into a sequential application of denoising autoencoders, diffusion models achieve state-of-the-art synthesis results. We apply diffusion models in the latent space of powerful pretrained autoencoders."^^xsd:string ;
+    mlkg:citationCount 9000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p004>,
+        <http://example.org/mlkg/data/publication/p013> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a038> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/diffusion>,
+        <http://example.org/mlkg/data/topic/transfer_learning> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/generative_models>,
+        <http://example.org/mlkg/data/area/representation_learning> ;
+    mlkg:publicationYear 2022 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/cvpr> ;
+    mlkg:title "High-Resolution Image Synthesis with Latent Diffusion Models"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p017> a mlkg:Publication ;
+    rdfs:label "RotatE: Knowledge Graph Embedding by Relational Rotation in Complex Space" ;
+    mlkg:abstract "We study the problem of learning representations of entities and relations in knowledge graphs. We propose RotatE, which defines each relation as a rotation from the source entity to the target entity in the complex vector space."^^xsd:string ;
+    mlkg:citationCount 3200 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p016> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a045> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/knowledge_graph> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/graph_ml>,
+        <http://example.org/mlkg/data/area/representation_learning> ;
+    mlkg:publicationYear 2019 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/iclr> ;
+    mlkg:title "RotatE: Knowledge Graph Embedding by Relational Rotation in Complex Space"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p021> a mlkg:Publication ;
+    rdfs:label "Proximal Policy Optimization Algorithms" ;
+    mlkg:abstract "We propose a new family of policy gradient methods for reinforcement learning, which alternate between sampling data through interaction with the environment, and optimizing a surrogate objective function using stochastic gradient ascent."^^xsd:string ;
+    mlkg:citationCount 14000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p019> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a054> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/rl_deep> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/optimization>,
+        <http://example.org/mlkg/data/area/reinforcement_learning> ;
+    mlkg:publicationYear 2017 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/arxiv> ;
+    mlkg:title "Proximal Policy Optimization Algorithms"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p022> a mlkg:Publication ;
+    rdfs:label "A Simple Framework for Contrastive Learning of Visual Representations" ;
+    mlkg:abstract "This paper presents SimCLR: a simple framework for contrastive learning of visual representations. We simplify recently proposed contrastive self-supervised learning algorithms without requiring specialized architectures."^^xsd:string ;
+    mlkg:citationCount 14000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p011>,
+        <http://example.org/mlkg/data/publication/p030> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a056> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/self_supervised> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/representation_learning> ;
+    mlkg:publicationYear 2020 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/icml> ;
+    mlkg:title "A Simple Framework for Contrastive Learning of Visual Representations"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p028> a mlkg:Publication ;
+    rdfs:label "You Only Look Once: Unified, Real-Time Object Detection" ;
+    mlkg:abstract "We present YOLO, a new approach to object detection. We frame object detection as a regression problem to spatially separated bounding boxes and associated class probabilities."^^xsd:string ;
+    mlkg:citationCount 38000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p012>,
+        <http://example.org/mlkg/data/publication/p029> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a067> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/object_detection> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision> ;
+    mlkg:publicationYear 2016 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/cvpr> ;
+    mlkg:title "You Only Look Once: Unified, Real-Time Object Detection"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p032> a mlkg:Publication ;
+    rdfs:label "Dropout: A Simple Way to Prevent Neural Networks from Overfitting" ;
+    mlkg:abstract "Deep neural nets with a large number of parameters are very powerful machine learning systems. However, overfitting is a serious problem. We propose dropout, a technique for addressing this problem by randomly dropping units during training."^^xsd:string ;
+    mlkg:citationCount 38000 ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a075> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/deep_learning>,
+        <http://example.org/mlkg/data/area/optimization> ;
+    mlkg:publicationYear 2014 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/jmlr> ;
+    mlkg:title "Dropout: A Simple Way to Prevent Neural Networks from Overfitting"^^xsd:string .
+
+<http://example.org/mlkg/data/author/a002> a mlkg:Author ;
+    rdfs:label "Noam Shazeer" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/google_brain> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p001>,
+        <http://example.org/mlkg/data/publication/p003>,
+        <http://example.org/mlkg/data/publication/p015> ;
+    mlkg:coauthorWith <http://example.org/mlkg/data/author/a003>,
+        <http://example.org/mlkg/data/author/a004> .
+
+<http://example.org/mlkg/data/publication/p013> a mlkg:Publication ;
+    rdfs:label "Denoising Diffusion Probabilistic Models" ;
+    mlkg:abstract "We present high quality image synthesis results using diffusion probabilistic models, a class of latent variable models inspired by considerations from nonequilibrium thermodynamics."^^xsd:string ;
+    mlkg:citationCount 12000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p004>,
+        <http://example.org/mlkg/data/publication/p020>,
+        <http://example.org/mlkg/data/publication/p033> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a035> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/diffusion> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/generative_models> ;
+    mlkg:publicationYear 2020 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/neurips> ;
+    mlkg:title "Denoising Diffusion Probabilistic Models"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p016> a mlkg:Publication ;
+    rdfs:label "Translating Embeddings for Modeling Multi-relational Data" ;
+    mlkg:abstract "We consider the problem of embedding entities and relationships of multi-relational data in low-dimensional vector spaces. Our model, TransE, learns vector embeddings so that relationships correspond to translations in the embedding space."^^xsd:string ;
+    mlkg:citationCount 8500 ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a042> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/natural_language_processing>,
+        <http://example.org/mlkg/data/area/representation_learning> ;
+    mlkg:publicationYear 2013 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/neurips> ;
+    mlkg:title "Translating Embeddings for Modeling Multi-relational Data"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p019> a mlkg:Publication ;
+    rdfs:label "Playing Atari with Deep Reinforcement Learning" ;
+    mlkg:abstract "We present the first deep learning model to successfully learn control policies directly from high-dimensional sensory input using reinforcement learning. We use a deep Q-network (DQN) to learn to play Atari 2600 games."^^xsd:string ;
+    mlkg:citationCount 15000 ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a049> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/rl_deep> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/deep_learning>,
+        <http://example.org/mlkg/data/area/reinforcement_learning> ;
+    mlkg:publicationYear 2013 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/nips_workshop> ;
+    mlkg:title "Playing Atari with Deep Reinforcement Learning"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p029> a mlkg:Publication ;
+    rdfs:label "Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks" ;
+    mlkg:abstract "State-of-the-art object detection networks depend on region proposal algorithms. We introduce a Region Proposal Network that shares full-image convolutional features with the detection network, enabling nearly cost-free region proposals."^^xsd:string ;
+    mlkg:citationCount 45000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p012>,
+        <http://example.org/mlkg/data/publication/p028> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a030> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/cnn>,
+        <http://example.org/mlkg/data/topic/object_detection> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision> ;
+    mlkg:publicationYear 2015 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/neurips> ;
+    mlkg:title "Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p030> a mlkg:Publication ;
+    rdfs:label "How transferable are features in deep neural networks?" ;
+    mlkg:abstract "Many deep neural networks trained on natural images exhibit a curious phenomenon in common: on the first layer they learn features similar to Gabor filters and color blobs. We study the transferability of features learned at different layers."^^xsd:string ;
+    mlkg:citationCount 12000 ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a071> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/deep_learning> ;
+    mlkg:publicationYear 2014 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/neurips> ;
+    mlkg:title "How transferable are features in deep neural networks?"^^xsd:string .
+
+<http://example.org/mlkg/data/topic/cnn> a mlkg:ResearchTopic ;
+    rdfs:label "Convolutional Neural Networks" ;
+    mlkg:topicInArea <http://example.org/mlkg/data/area/computer_vision> .
+
+<http://example.org/mlkg/data/topic/transformer> a mlkg:ResearchTopic ;
+    rdfs:label "Transformers" ;
+    mlkg:topicInArea <http://example.org/mlkg/data/area/deep_learning> .
+
+<http://example.org/mlkg/data/venue/cvpr> a mlkg:Venue ;
+    rdfs:label "CVPR" .
+
+<http://example.org/mlkg/data/area/reinforcement_learning> a mlkg:ResearchArea ;
+    rdfs:label "Reinforcement Learning" .
+
+<http://example.org/mlkg/data/institution/meta_ai> a mlkg:Institution ;
+    rdfs:label "Meta AI" .
+
+<http://example.org/mlkg/data/publication/p012> a mlkg:Publication ;
+    rdfs:label "ImageNet Large Scale Visual Recognition Challenge" ;
+    mlkg:abstract "The ImageNet Large Scale Visual Recognition Challenge is a benchmark in object category classification and detection on hundreds of object categories and millions of images."^^xsd:string ;
+    mlkg:citationCount 42000 ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a032> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/object_detection> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision> ;
+    mlkg:publicationYear 2015 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/ijcv> ;
+    mlkg:title "ImageNet Large Scale Visual Recognition Challenge"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p033> a mlkg:Publication ;
+    rdfs:label "Adam: A Method for Stochastic Optimization" ;
+    mlkg:abstract "We introduce Adam, an algorithm for first-order gradient-based optimization of stochastic objective functions, based on adaptive estimates of lower-order moments."^^xsd:string ;
+    mlkg:citationCount 130000 ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a076> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/mathematics>,
+        <http://example.org/mlkg/data/area/optimization> ;
+    mlkg:publicationYear 2015 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/iclr> ;
+    mlkg:title "Adam: A Method for Stochastic Optimization"^^xsd:string .
+
+<http://example.org/mlkg/data/area/graph_ml> a mlkg:ResearchArea ;
+    rdfs:label "Graph Machine Learning" .
+
+<http://example.org/mlkg/data/author/a014> a mlkg:Author ;
+    rdfs:label "Yoshua Bengio" ;
+    mlkg:affiliatedWith <http://example.org/mlkg/data/institution/mila>,
+        <http://example.org/mlkg/data/institution/universite_de_montreal> ;
+    mlkg:authorOf <http://example.org/mlkg/data/publication/p004>,
+        <http://example.org/mlkg/data/publication/p007>,
+        <http://example.org/mlkg/data/publication/p030> .
+
+<http://example.org/mlkg/data/institution/deepmind> a mlkg:Institution ;
+    rdfs:label "DeepMind" .
+
+<http://example.org/mlkg/data/publication/p002> a mlkg:Publication ;
+    rdfs:label "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding" ;
+    mlkg:abstract "We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers. BERT is designed to pre-train deep bidirectional representations from unlabeled text by jointly conditioning on both left and right context."^^xsd:string ;
+    mlkg:citationCount 72000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p001>,
+        <http://example.org/mlkg/data/publication/p030> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a005> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/bert>,
+        <http://example.org/mlkg/data/topic/transformer> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/deep_learning>,
+        <http://example.org/mlkg/data/area/natural_language_processing>,
+        <http://example.org/mlkg/data/area/representation_learning> ;
+    mlkg:publicationYear 2019 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/naacl> ;
+    mlkg:title "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"^^xsd:string .
+
+<http://example.org/mlkg/data/venue/iclr> a mlkg:Venue ;
+    rdfs:label "ICLR" .
+
+<http://example.org/mlkg/data/area/generative_models> a mlkg:ResearchArea ;
+    rdfs:label "Generative Models" .
+
+<http://example.org/mlkg/data/institution/openai> a mlkg:Institution ;
+    rdfs:label "OpenAI" .
+
+<http://example.org/mlkg/data/publication/p003> a mlkg:Publication ;
+    rdfs:label "Language Models are Few-Shot Learners" ;
+    mlkg:abstract "Recent work has demonstrated substantial gains on many NLP tasks and benchmarks by pre-training on a large corpus of text followed by fine-tuning on a specific task. We show that scaling up language models greatly improves task-agnostic, few-shot performance."^^xsd:string ;
+    mlkg:citationCount 28000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p001>,
+        <http://example.org/mlkg/data/publication/p002> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a008> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/transfer_learning> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/natural_language_processing>,
+        <http://example.org/mlkg/data/area/representation_learning> ;
+    mlkg:publicationYear 2020 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/neurips> ;
+    mlkg:title "Language Models are Few-Shot Learners"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p004> a mlkg:Publication ;
+    rdfs:label "Generative Adversarial Nets" ;
+    mlkg:abstract "We propose a new framework for estimating generative models via an adversarial process, in which we simultaneously train two models: a generative model G that captures the data distribution, and a discriminative model D that estimates the probability."^^xsd:string ;
+    mlkg:citationCount 55000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p001>,
+        <http://example.org/mlkg/data/publication/p002> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a011> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/gan> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/generative_models> ;
+    mlkg:publicationYear 2014 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/neurips> ;
+    mlkg:title "Generative Adversarial Nets"^^xsd:string .
+
+<http://example.org/mlkg/data/publication/p011> a mlkg:Publication ;
+    rdfs:label "Deep Residual Learning for Image Recognition" ;
+    mlkg:abstract "Deeper neural networks are more difficult to train. We present a residual learning framework to ease the training of networks that are substantially deeper than those used previously. We explicitly reformulate the layers as learning residual functions."^^xsd:string ;
+    mlkg:citationCount 165000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p009>,
+        <http://example.org/mlkg/data/publication/p012>,
+        <http://example.org/mlkg/data/publication/p032>,
+        <http://example.org/mlkg/data/publication/p033>,
+        <http://example.org/mlkg/data/publication/p034> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a028> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/deep_learning> ;
+    mlkg:publicationYear 2016 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/cvpr> ;
+    mlkg:title "Deep Residual Learning for Image Recognition"^^xsd:string .
+
+<http://example.org/mlkg/data/area/natural_language_processing> a mlkg:ResearchArea ;
+    rdfs:label "Natural Language Processing" .
+
+<http://example.org/mlkg/data/area/optimization> a mlkg:ResearchArea ;
+    rdfs:label "Optimization and Training" .
+
+<http://example.org/mlkg/data/venue/neurips> a mlkg:Venue ;
+    rdfs:label "NeurIPS" .
+
+mlkg:ResearchArea a owl:Class ;
+    rdfs:label "Research Area" ;
+    rdfs:comment "A broad field of research (e.g., NLP, Computer Vision)." .
+
+mlkg:Venue a owl:Class ;
+    rdfs:label "Venue" ;
+    rdfs:comment "A conference or journal where papers are published." .
+
+<http://example.org/mlkg/data/area/representation_learning> a mlkg:ResearchArea ;
+    rdfs:label "Representation Learning" .
+
+<http://example.org/mlkg/data/area/deep_learning> a mlkg:ResearchArea ;
+    rdfs:label "Deep Learning" .
+
+<http://example.org/mlkg/data/publication/p001> a mlkg:Publication ;
+    rdfs:label "Attention Is All You Need" ;
+    mlkg:abstract "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely."^^xsd:string ;
+    mlkg:citationCount 95000 ;
+    mlkg:cites <http://example.org/mlkg/data/publication/p033> ;
+    mlkg:firstAuthor <http://example.org/mlkg/data/author/a001> ;
+    mlkg:hasKeyword <http://example.org/mlkg/data/topic/attention>,
+        <http://example.org/mlkg/data/topic/cnn>,
+        <http://example.org/mlkg/data/topic/transformer> ;
+    mlkg:inArea <http://example.org/mlkg/data/area/computer_science>,
+        <http://example.org/mlkg/data/area/computer_vision>,
+        <http://example.org/mlkg/data/area/deep_learning> ;
+    mlkg:publicationYear 2017 ;
+    mlkg:publishedIn <http://example.org/mlkg/data/venue/neurips> ;
+    mlkg:title "Attention Is All You Need"^^xsd:string .
+
+mlkg:ResearchTopic a owl:Class ;
+    rdfs:label "Research Topic" ;
+    rdfs:comment "A specific concept or technique (e.g., transformers, GANs)." .
+
+<http://example.org/mlkg/data/institution/google_brain> a mlkg:Institution ;
+    rdfs:label "Google Brain" .
+
+<http://example.org/mlkg/data/area/computer_vision> a mlkg:ResearchArea ;
+    rdfs:label "Computer Vision" .
+
+mlkg:Institution a owl:Class ;
+    rdfs:label "Institution" ;
+    rdfs:comment "A university, company, or research lab." .
+
+<http://example.org/mlkg/data/area/computer_science> a mlkg:ResearchArea ;
+    rdfs:label "Computer Science" .
+
+mlkg:Publication a owl:Class ;
+    rdfs:label "Publication" ;
+    rdfs:comment "A research paper or article in machine learning." .
+
+mlkg:Author a owl:Class ;
+    rdfs:label "Author" ;
+    rdfs:comment "A person who writes research papers." .
+
