@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ML Research KG Schema</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #FAFAF7; width: 3000px; height: 1100px; overflow: hidden; }
+  svg { width: 3000px; height: 1100px; }
+</style>
+</head>
+<body>
+<svg viewBox="0 0 3000 1100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#8892A8"/>
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <!-- Title -->
+  <text x="1500" y="55" text-anchor="middle" font-family="DM Sans" font-size="36" font-weight="700" fill="#2E5E8A">ML Research KG Schema</text>
+  <text x="1500" y="90" text-anchor="middle" font-family="DM Sans" font-size="18" fill="#6B7280">8 Classes · 12 Object Properties · 4 Datatype Properties</text>
+
+  <!-- Class boxes -->
+  <!-- Publication (center) -->
+  <rect x="1220" y="390" width="260" height="100" rx="12" fill="#2E5E8A" filter="url(#shadow)"/>
+  <text x="1350" y="448" text-anchor="middle" font-family="DM Sans" font-size="20" font-weight="700" fill="white">Publication</text>
+
+  <!-- Author (top-left) -->
+  <rect x="180" y="230" width="220" height="90" rx="12" fill="#D97706" filter="url(#shadow)"/>
+  <text x="290" y="283" text-anchor="middle" font-family="DM Sans" font-size="20" font-weight="700" fill="white">Author</text>
+
+  <!-- Institution (left) -->
+  <rect x="80" y="530" width="220" height="90" rx="12" fill="#059669" filter="url(#shadow)"/>
+  <text x="190" y="583" text-anchor="middle" font-family="DM Sans" font-size="20" font-weight="700" fill="white">Institution</text>
+
+  <!-- Venue (top-right) -->
+  <rect x="2200" y="200" width="200" height="90" rx="12" fill="#E85D04" filter="url(#shadow)"/>
+  <text x="2300" y="253" text-anchor="middle" font-family="DM Sans" font-size="20" font-weight="700" fill="white">Venue</text>
+
+  <!-- ResearchArea (right) -->
+  <rect x="2150" y="430" width="250" height="90" rx="12" fill="#7C3AED" filter="url(#shadow)"/>
+  <text x="2275" y="483" text-anchor="middle" font-family="DM Sans" font-size="20" font-weight="700" fill="white">ResearchArea</text>
+
+  <!-- ResearchTopic (bottom-right) -->
+  <rect x="2050" y="700" width="260" height="90" rx="12" fill="#DB2777" filter="url(#shadow)"/>
+  <text x="2180" y="753" text-anchor="middle" font-family="DM Sans" font-size="20" font-weight="700" fill="white">ResearchTopic</text>
+
+  <!-- Dataset (bottom-left) -->
+  <rect x="580" y="740" width="200" height="90" rx="12" fill="#0891B2" filter="url(#shadow)"/>
+  <text x="680" y="793" text-anchor="middle" font-family="DM Sans" font-size="20" font-weight="700" fill="white">Dataset</text>
+
+  <!-- CodeRepository (bottom-center) -->
+  <rect x="1150" y="740" width="260" height="90" rx="12" fill="#65A30D" filter="url(#shadow)"/>
+  <text x="1280" y="793" text-anchor="middle" font-family="DM Sans" font-size="20" font-weight="700" fill="white">CodeRepository</text>
+
+  <!-- Relationships (arrows with labels) -->
+
+  <!-- Author → Publication: authorOf -->
+  <line x1="400" y1="290" x2="1220" y2="420" stroke="#8892A8" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <rect x="680" y="330" width="120" height="26" rx="6" fill="#FAFAF7" opacity="0.9"/>
+  <text x="740" y="349" text-anchor="middle" font-family="DM Sans" font-size="15" font-style="italic" fill="#4B5563">authorOf</text>
+
+  <!-- Publication → Author: firstAuthor -->
+  <line x1="1220" y1="400" x2="400" y2="260" stroke="#8892A8" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <rect x="700" y="290" width="130" height="26" rx="6" fill="#FAFAF7" opacity="0.9"/>
+  <text x="765" y="309" text-anchor="middle" font-family="DM Sans" font-size="15" font-style="italic" fill="#4B5563">firstAuthor</text>
+
+  <!-- Author → Institution: affiliatedWith -->
+  <line x1="250" y1="320" x2="210" y2="530" stroke="#8892A8" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <rect x="120" y="405" width="150" height="26" rx="6" fill="#FAFAF7" opacity="0.9"/>
+  <text x="195" y="424" text-anchor="middle" font-family="DM Sans" font-size="15" font-style="italic" fill="#4B5563">affiliatedWith</text>
+
+  <!-- Publication → Venue: publishedIn -->
+  <line x1="1480" y1="400" x2="2200" y2="260" stroke="#8892A8" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <rect x="1750" y="295" width="140" height="26" rx="6" fill="#FAFAF7" opacity="0.9"/>
+  <text x="1820" y="314" text-anchor="middle" font-family="DM Sans" font-size="15" font-style="italic" fill="#4B5563">publishedIn</text>
+
+  <!-- Publication → ResearchArea: inArea -->
+  <line x1="1480" y1="450" x2="2150" y2="470" stroke="#8892A8" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <rect x="1760" y="434" width="100" height="26" rx="6" fill="#FAFAF7" opacity="0.9"/>
+  <text x="1810" y="453" text-anchor="middle" font-family="DM Sans" font-size="15" font-style="italic" fill="#4B5563">inArea</text>
+
+  <!-- Publication → ResearchTopic: hasKeyword -->
+  <line x1="1420" y1="490" x2="2050" y2="730" stroke="#8892A8" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <rect x="1640" y="600" width="140" height="26" rx="6" fill="#FAFAF7" opacity="0.9"/>
+  <text x="1710" y="619" text-anchor="middle" font-family="DM Sans" font-size="15" font-style="italic" fill="#4B5563">hasKeyword</text>
+
+  <!-- ResearchTopic → ResearchArea: topicInArea -->
+  <line x1="2200" y1="700" x2="2270" y2="520" stroke="#8892A8" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <rect x="2260" y="595" width="130" height="26" rx="6" fill="#FAFAF7" opacity="0.9"/>
+  <text x="2325" y="614" text-anchor="middle" font-family="DM Sans" font-size="15" font-style="italic" fill="#4B5563">topicInArea</text>
+
+  <!-- Publication → Dataset: usesDataset -->
+  <line x1="1270" y1="490" x2="720" y2="740" stroke="#8892A8" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <rect x="900" y="610" width="140" height="26" rx="6" fill="#FAFAF7" opacity="0.9"/>
+  <text x="970" y="629" text-anchor="middle" font-family="DM Sans" font-size="15" font-style="italic" fill="#4B5563">usesDataset</text>
+
+  <!-- Publication → CodeRepository: hasCode -->
+  <line x1="1350" y1="490" x2="1300" y2="740" stroke="#8892A8" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <rect x="1250" y="610" width="120" height="26" rx="6" fill="#FAFAF7" opacity="0.9"/>
+  <text x="1310" y="629" text-anchor="middle" font-family="DM Sans" font-size="15" font-style="italic" fill="#4B5563">hasCode</text>
+
+  <!-- Publication → Publication: cites (self-loop) -->
+  <path d="M 1480 430 C 1600 350, 1600 510, 1480 450" stroke="#8892A8" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <rect x="1560" y="400" width="80" height="26" rx="6" fill="#FAFAF7" opacity="0.9"/>
+  <text x="1600" y="419" text-anchor="middle" font-family="DM Sans" font-size="15" font-style="italic" fill="#4B5563">cites</text>
+
+  <!-- Datatype properties note -->
+  <text x="1500" y="1060" text-anchor="middle" font-family="DM Sans" font-size="16" font-style="italic" fill="#6B7280">
+    Datatype properties on Publication: title · abstract · publicationYear · citationCount
+  </text>
+</svg>
+</body>
+</html>

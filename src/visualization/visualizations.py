@@ -565,7 +565,7 @@ class KGVisualizer:
         y_pos = np.arange(len(topics))
 
         # Bar colors based on avg citations
-        max_cit = max(avg_cits) if avg_cits else 1
+        max_cit = max(avg_cits) if avg_cits and max(avg_cits) > 0 else 1
         colors = [plt.cm.YlOrRd(0.3 + 0.6 * (c / max_cit)) for c in avg_cits]
 
         bars = ax.barh(y_pos, counts, color=colors, edgecolor='white',

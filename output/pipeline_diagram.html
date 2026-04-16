@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Data Extraction Pipeline</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #FAFAF7; width: 3000px; height: 1100px; overflow: hidden; }
+  svg { width: 3000px; height: 1100px; }
+</style>
+</head>
+<body>
+<svg viewBox="0 0 3000 1100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#8892A8"/>
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <!-- Title -->
+  <text x="1500" y="60" text-anchor="middle" font-family="DM Sans" font-size="36" font-weight="700" fill="#2E5E8A">Data Extraction Pipeline</text>
+
+  <!-- Data Sources (left column) -->
+  <rect x="80" y="200" width="320" height="100" rx="14" fill="#2E5E8A" filter="url(#shadow)"/>
+  <text x="240" y="258" text-anchor="middle" font-family="DM Sans" font-size="22" font-weight="700" fill="white">Semantic Scholar</text>
+
+  <rect x="80" y="380" width="320" height="100" rx="14" fill="#7C3AED" filter="url(#shadow)"/>
+  <text x="240" y="438" text-anchor="middle" font-family="DM Sans" font-size="22" font-weight="700" fill="white">arXiv</text>
+
+  <rect x="80" y="560" width="320" height="100" rx="14" fill="#059669" filter="url(#shadow)"/>
+  <text x="240" y="618" text-anchor="middle" font-family="DM Sans" font-size="22" font-weight="700" fill="white">Papers with Code</text>
+
+  <!-- Arrows: sources → extraction -->
+  <line x1="400" y1="250" x2="580" y2="380" stroke="#8892A8" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="400" y1="430" x2="580" y2="420" stroke="#8892A8" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="400" y1="610" x2="580" y2="460" stroke="#8892A8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Processing steps -->
+  <rect x="580" y="330" width="300" height="160" rx="14" fill="#D97706" filter="url(#shadow)"/>
+  <text x="730" y="400" text-anchor="middle" font-family="DM Sans" font-size="20" font-weight="700" fill="white">Extraction</text>
+  <text x="730" y="430" text-anchor="middle" font-family="DM Sans" font-size="16" fill="rgba(255,255,255,0.8)">(API calls)</text>
+
+  <line x1="880" y1="410" x2="1030" y2="410" stroke="#8892A8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <rect x="1030" y="330" width="300" height="160" rx="14" fill="#D97706" filter="url(#shadow)"/>
+  <text x="1180" y="400" text-anchor="middle" font-family="DM Sans" font-size="20" font-weight="700" fill="white">Entity</text>
+  <text x="1180" y="430" text-anchor="middle" font-family="DM Sans" font-size="20" font-weight="700" fill="white">Resolution</text>
+
+  <line x1="1330" y1="410" x2="1480" y2="410" stroke="#8892A8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <rect x="1480" y="330" width="300" height="160" rx="14" fill="#D97706" filter="url(#shadow)"/>
+  <text x="1630" y="400" text-anchor="middle" font-family="DM Sans" font-size="20" font-weight="700" fill="white">RDF Triple</text>
+  <text x="1630" y="430" text-anchor="middle" font-family="DM Sans" font-size="20" font-weight="700" fill="white">Generation</text>
+
+  <line x1="1780" y1="410" x2="1950" y2="410" stroke="#8892A8" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Knowledge Graph (final box) -->
+  <rect x="1950" y="240" width="350" height="340" rx="18" fill="#2E5E8A" filter="url(#shadow)"/>
+  <text x="2125" y="370" text-anchor="middle" font-family="DM Sans" font-size="28" font-weight="700" fill="white">Knowledge</text>
+  <text x="2125" y="410" text-anchor="middle" font-family="DM Sans" font-size="28" font-weight="700" fill="white">Graph</text>
+  <line x1="2020" y1="440" x2="2230" y2="440" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+  <text x="2125" y="490" text-anchor="middle" font-family="DM Sans" font-size="32" font-weight="700" fill="rgba(255,255,255,0.95)">31,071</text>
+  <text x="2125" y="520" text-anchor="middle" font-family="DM Sans" font-size="18" fill="rgba(255,255,255,0.7)">triples</text>
+
+  <!-- Stats bar at bottom -->
+  <text x="1500" y="1045" text-anchor="middle" font-family="DM Sans" font-size="20" font-weight="600" fill="#1A1A2E">
+    Extracted: 720 papers · 3,084 authors · 15 topics · 35 research areas
+  </text>
+</svg>
+</body>
+</html>

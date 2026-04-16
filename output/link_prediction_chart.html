@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Link Prediction Performance</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #FAFAF7; width: 3000px; height: 1100px; overflow: hidden; }
+  svg { width: 3000px; height: 1100px; }
+</style>
+</head>
+<body>
+<svg viewBox="0 0 3000 1100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Title -->
+  <text x="1500" y="65" text-anchor="middle" font-family="DM Sans" font-size="36" font-weight="700" fill="#2E5E8A">Link Prediction Performance</text>
+  <text x="1500" y="100" text-anchor="middle" font-family="DM Sans" font-size="18" fill="#6B7280">TransE model · 128 dimensions · 31,071 triples</text>
+
+  <!-- Y-axis -->
+  <line x1="400" y1="200" x2="400" y2="850" stroke="#D1D5DB" stroke-width="2"/>
+  <text x="370" y="205" text-anchor="end" font-family="DM Sans" font-size="16" fill="#6B7280">1.0</text>
+  <text x="370" y="530.0" text-anchor="end" font-family="DM Sans" font-size="16" fill="#6B7280">0.5</text>
+  <text x="370" y="855" text-anchor="end" font-family="DM Sans" font-size="16" fill="#6B7280">0.0</text>
+  <text x="330" y="525" text-anchor="middle" font-family="DM Sans" font-size="20" font-weight="600" fill="#4B5563" transform="rotate(-90,330,525)">Score</text>
+
+  <!-- Grid lines -->
+  <line x1="400" y1="687.5" x2="2600" y2="687.5" stroke="#E5E7EB" stroke-width="1" stroke-dasharray="6,4"/>
+  <line x1="400" y1="525.0" x2="2600" y2="525.0" stroke="#E5E7EB" stroke-width="1" stroke-dasharray="6,4"/>
+  <line x1="400" y1="362.5" x2="2600" y2="362.5" stroke="#E5E7EB" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <!-- Target lines -->
+  <line x1="400" y1="655.0" x2="2600" y2="655.0" stroke="#D97706" stroke-width="2.5" stroke-dasharray="12,6"/>
+  <text x="2615" y="661.0" font-family="DM Sans" font-size="15" fill="#D97706" font-weight="600">MRR target (0.3)</text>
+
+  <line x1="400" y1="525.0" x2="2600" y2="525.0" stroke="#D97706" stroke-width="2.5" stroke-dasharray="4,4"/>
+  <text x="2615" y="531.0" font-family="DM Sans" font-size="15" fill="#D97706" font-weight="600">Hits@10 target (0.5)</text>
+
+  <!-- X-axis -->
+  <line x1="400" y1="850" x2="2600" y2="850" stroke="#D1D5DB" stroke-width="2"/>
+
+  <!-- Bars -->
+  
+  <rect x="616.0" y="517.9626761021982" width="280" height="332.0373238978018" rx="8" fill="#2E5E8A" opacity="0.85"/>
+  <rect x="616.0" y="842.0" width="280" height="8" fill="#2E5E8A" opacity="0.85"/>
+  <text x="756.0" y="499.9626761021982" text-anchor="middle" font-family="DM Sans" font-size="28" font-weight="700" fill="#1A1A2E">0.511</text>
+  <text x="756.0" y="895" text-anchor="middle" font-family="DM Sans" font-size="22" font-weight="600" fill="#1A1A2E">MRR</text>
+  <rect x="1112.0" y="584.8" width="280" height="265.2" rx="8" fill="#2E5E8A" opacity="0.85"/>
+  <rect x="1112.0" y="842.0" width="280" height="8" fill="#2E5E8A" opacity="0.85"/>
+  <text x="1252.0" y="566.8" text-anchor="middle" font-family="DM Sans" font-size="28" font-weight="700" fill="#1A1A2E">0.408</text>
+  <text x="1252.0" y="895" text-anchor="middle" font-family="DM Sans" font-size="22" font-weight="600" fill="#1A1A2E">Hits@1</text>
+  <rect x="1608.0" y="471.70000000000005" width="280" height="378.29999999999995" rx="8" fill="#2E5E8A" opacity="0.85"/>
+  <rect x="1608.0" y="842.0" width="280" height="8" fill="#2E5E8A" opacity="0.85"/>
+  <text x="1748.0" y="453.70000000000005" text-anchor="middle" font-family="DM Sans" font-size="28" font-weight="700" fill="#1A1A2E">0.582</text>
+  <text x="1748.0" y="895" text-anchor="middle" font-family="DM Sans" font-size="22" font-weight="600" fill="#1A1A2E">Hits@3</text>
+  <rect x="2104.0" y="413.2" width="280" height="436.8" rx="8" fill="#2E5E8A" opacity="0.85"/>
+  <rect x="2104.0" y="842.0" width="280" height="8" fill="#2E5E8A" opacity="0.85"/>
+  <text x="2244.0" y="395.2" text-anchor="middle" font-family="DM Sans" font-size="28" font-weight="700" fill="#1A1A2E">0.672</text>
+  <text x="2244.0" y="895" text-anchor="middle" font-family="DM Sans" font-size="22" font-weight="600" fill="#1A1A2E">Hits@10</text>
+</svg>
+</body>
+</html>

@@ -168,7 +168,7 @@ def run_ml_pipeline(kg_path="data/processed/ml_research_kg.ttl",
         output_dir=output_dir,
         model_name="TransE",
         embedding_dim=128,
-        num_epochs=100
+        num_epochs=30
     )
 
     return pipe
