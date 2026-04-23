@@ -103,7 +103,7 @@ def draw_arrow(ax, x1, y1, x2, y2, label=None, curve=0, label_offset=(0, 0)):
     if label:
         mx = (x1 + x2) / 2 + label_offset[0]
         my = (y1 + y2) / 2 + label_offset[1] + curve * 0.3
-        ax.text(mx, my, label, fontsize=7.5, style='italic',
+        ax.text(mx, my, label, fontsize=14, style='italic',
                 color=TEXT, ha='center', va='center', zorder=5,
                 bbox=dict(boxstyle='round,pad=0.15', facecolor=BG,
                           edgecolor='none', alpha=0.85))
@@ -135,7 +135,7 @@ def generate_schema(output_path):
     }
 
     for name, (x, y, w, h) in classes.items():
-        draw_box(ax, x, y, w, h, name, COLORS[name], fontsize=10)
+        draw_box(ax, x, y, w, h, name, COLORS[name], fontsize=16)
 
     # Center helper
     def ctr(name):
@@ -196,7 +196,7 @@ def generate_schema(output_path):
         color=GRAY, linewidth=1.3, zorder=2
     )
     ax.add_patch(loop)
-    ax.text(px + pw + 0.6, py + ph/2, "cites", fontsize=7.5, style='italic',
+    ax.text(px + pw + 0.6, py + ph/2, "cites", fontsize=14, style='italic',
             color=TEXT, ha='left', va='center',
             bbox=dict(boxstyle='round,pad=0.15', facecolor=BG, edgecolor='none', alpha=0.85))
 
@@ -209,7 +209,7 @@ def generate_schema(output_path):
     # Datatype note
     ax.text(7.5, 0.15,
             "Datatype properties on Publication: title · abstract · publicationYear · citationCount",
-            ha='center', fontsize=9, style='italic', color=GRAY)
+            ha='center', fontsize=13, style='italic', color=GRAY)
 
     plt.tight_layout(pad=0.3)
     fig.savefig(output_path, dpi=DPI, bbox_inches='tight', facecolor=BG)
@@ -236,7 +236,7 @@ def generate_pipeline(total_triples, counts, output_path):
         (src_x, 1.8, "Papers with Code", "#059669"),
     ]
     for x, y, label, color in sources:
-        draw_box(ax, x, y, src_w, src_h, label, color, fontsize=10)
+        draw_box(ax, x, y, src_w, src_h, label, color, fontsize=16)
 
     # Processing steps
     step_w, step_h = 2.0, 1.0
@@ -246,17 +246,17 @@ def generate_pipeline(total_triples, counts, output_path):
         (9.1, 2.5, "RDF Triple\nGeneration", AMBER),
     ]
     for x, y, label, color in steps:
-        draw_box(ax, x, y, step_w, step_h, label, color, fontsize=10)
+        draw_box(ax, x, y, step_w, step_h, label, color, fontsize=16)
 
     # Knowledge Graph (final)
     kg_x, kg_y, kg_w, kg_h = 12.2, 1.8, 2.2, 2.2
     draw_box(ax, kg_x, kg_y, kg_w, kg_h, "", BLUE, fontsize=1)
     ax.text(kg_x + kg_w/2, kg_y + kg_h*0.65, "Knowledge\nGraph",
             ha='center', va='center', color='white',
-            fontsize=13, fontweight='bold', zorder=4)
+            fontsize=18, fontweight='bold', zorder=4)
     ax.text(kg_x + kg_w/2, kg_y + kg_h*0.25, f"{total_triples:,}\ntriples",
             ha='center', va='center', color=(1, 1, 1, 0.8),
-            fontsize=11, zorder=4)
+            fontsize=16, zorder=4)
 
     # Arrows: sources → extraction
     for _, sy, _, _ in sources:
@@ -351,9 +351,9 @@ def generate_link_prediction(output_path):
 
     # Target labels
     ax.text(len(names) - 0.3, 0.305, "MRR target (0.3)",
-            fontsize=10, color=AMBER, fontweight='600', va='bottom')
+            fontsize=14, color=AMBER, fontweight='600', va='bottom')
     ax.text(len(names) - 0.3, 0.505, "Hits@10 target (0.5)",
-            fontsize=10, color=AMBER, fontweight='600', va='bottom')
+            fontsize=14, color=AMBER, fontweight='600', va='bottom')
 
     ax.set_xticks(x)
     ax.set_xticklabels(names, fontsize=14, fontweight='600', color=TEXT)
