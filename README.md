@@ -4,10 +4,10 @@ A knowledge graph for exploring ML/AI research papers, enabling paper recommenda
 
 ## Overview
 
-This project builds a semantic knowledge graph that connects machine learning research papers, authors, institutions, citations, datasets, and code repositories. The system demonstrates knowledge graph engineering techniques including RDF/OWL schema design, SPARQL querying, and graph embeddings for recommendations.
+This project builds a semantic knowledge graph that connects machine learning research papers, authors, institutions, citations, datasets, and code repositories. The system demonstrates knowledge graph engineering techniques including RDF/OWL schema design, SPARQL querying, graph embeddings, and an interactive web interface.
 
-**Course:** CS 497 - Knowledge Graph Engineering (15 weeks)  
-**Technology Stack:** RDF/OWL, SPARQL, Python, AllegroGraph
+**Course:** CS 497 - Knowledge Graph Engineering (15 weeks)
+**Technology Stack:** RDF/OWL, SPARQL, Python, FastAPI, React
 
 ---
 
@@ -46,37 +46,61 @@ See [schema/ml_research_ontology.ttl](schema/ml_research_ontology.ttl) for compl
 
 ```
 ml-research-kg/
-├── README.md
-├── schema/
-│   ├── ml_research_ontology.ttl      # RDF/OWL ontology
-│   └── sample_entities.md            # Example data
-├── data/
-│   ├── raw/                          # Raw API data
-│   └── rdf/                          # RDF triples
+├── schema/                           # RDF/OWL ontology definitions
 ├── src/
-│   ├── extraction/                   # API clients
+│   ├── extraction/                   # API clients (Semantic Scholar, arXiv, Papers with Code)
+│   ├── kg/                           # RDF triple builder
 │   ├── queries/                      # SPARQL queries
-│   └── ml/                          # Embeddings & link prediction
-├── notebooks/                        # Jupyter demos
+│   ├── ml/                           # Graph embeddings & link prediction
+│   └── visualization/                # Network and embedding visualizations
+├── scripts/
+│   ├── main.py                       # Full pipeline orchestrator
+│   └── viz_*.py                      # Standalone visualization scripts
+├── backend/
+│   └── server.py                     # FastAPI REST API
+├── frontend/                         # React + Vite + D3 web interface
+├── data/
+│   ├── raw/                          # Raw JSON from API extraction
+│   └── processed/                    # RDF triples (.ttl)
+├── output/                           # Generated figures and HTML visualizations
 └── docs/
-    └── milestones/                   # Project reports
 ```
 
 ---
 
-## Installation
+## Installation & Usage
+
+### Python pipeline
 
 ```bash
-# Clone repository
-git clone https://github.com/willpon4/ml-research-kg.git
-cd ml-research-kg
-
-# Create virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
+source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
+
+# Run full pipeline (extract → build KG → SPARQL → embed → visualize)
+python scripts/main.py
+
+# Skip API calls, rebuild from cached data/raw/ JSON
+python scripts/main.py --skip-extraction
+
+# Only run SPARQL queries on existing KG
+python scripts/main.py --queries-only
+```
+
+Set `SEMANTIC_SCHOLAR_API_KEY` in your environment to avoid rate limiting (optional).
+
+### Backend
+
+```bash
+uvicorn backend.server:app --host 0.0.0.0 --port 8000
+```
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
 ```
 
 ---
@@ -84,35 +108,22 @@ pip install -r requirements.txt
 ## Milestones
 
 - **Milestone 1 (Week 6):** ✅ Schema design complete
-- **Milestone 2 (Week 13):** 🚧 Working KG with 1000+ triples, SPARQL queries, ML models
-- **Milestone 3 (Week 15):** 📅 Final system with recommendation interface
+- **Milestone 2 (Week 13):** ✅ Working KG with 1000+ triples, SPARQL queries, graph embeddings
+- **Milestone 3 (Week 15):** 📅 Final system with recommendation interface, interactive web interface
 
 ---
 
 ## Technologies
 
-- **RDF/OWL:** Semantic data modeling
-- **SPARQL:** Graph query language
-- **Python:** Data processing and ML
-- **RDFLib:** RDF manipulation
-- **PyKEEN:** Knowledge graph embeddings
-- **AllegroGraph:** Triplestore
-
----
-
-## Status
-
-🚧 **In Development** - Milestone 1 Complete (Schema Design)
+- **RDF/OWL + SPARQL:** Semantic data modeling and graph queries (RDFLib)
+- **Python:** Data extraction, KG construction, ML pipeline
+- **FastAPI:** Backend REST API serving the knowledge graph
+- **React + Vite + D3:** Interactive frontend visualization
+- **NetworkX / scikit-learn:** Graph analysis and SVD-based embeddings
+- **PyKEEN (optional):** TransE/RotatE/ComplEx knowledge graph embeddings
 
 ---
 
 ## License
 
 MIT License
-
----
-
-## Contact
-
-**Project:** Knowledge Graph Engineering Course Project  
-**GitHub:** [willpon4](https://github.com/willpon4)
